@@ -110,4 +110,9 @@ namespace OneInteg.Server.Services
     {
         public string email { get; set; }
     }
+
+    public enum PaymentProviderType
+    {
+        MercadoPago
+    }
 }

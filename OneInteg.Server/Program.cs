@@ -106,7 +106,7 @@ static async Task<IResult> CheckoutUrl(
 static async Task<IResult> BackUrlSubscriptionMP(
     HttpContext contex, 
     [FromRoute(Name = "t_id")] Guid tenantId, 
-    [FromServices] IPaymentProvider paymentProvider,
+    [FromKeyedServices(PaymentProviderType.MercadoPago)] IPaymentProvider paymentProvider,
     [FromServices] ITenantRepository tenantRepository,
     [FromServices] IHttpClientFactory httpClientFactory)
 {

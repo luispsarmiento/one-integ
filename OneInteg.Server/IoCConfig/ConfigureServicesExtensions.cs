@@ -33,7 +33,7 @@ namespace OneInteg.Server.IoCConfig
 
         public static void AddPaymentProviders(this IServiceCollection services) 
         {
-            services.AddScoped<IPaymentProvider, MercadoPagoPaymentProvider>(s =>
+            services.AddKeyedScoped<IPaymentProvider, MercadoPagoPaymentProvider>(PaymentProviderType.MercadoPago, (s, key) =>
             {
                 var baseUri = Environment.GetEnvironmentVariable("MERCADO_PAGO_URI");
                 var accessToken = Environment.GetEnvironmentVariable("MERCADO_PAGO_ACCESS_TOKEN");
