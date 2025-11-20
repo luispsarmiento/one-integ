@@ -1,10 +1,11 @@
-﻿using MongoDB.Bson.IO;
-using MongoDB.Bson;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.IO;
 using OneInteg.Server.DataAccess;
 using OneInteg.Server.Domain.Repositories;
 using OneInteg.Server.Domain.Services;
 using System.Net.Mail;
 using System.Numerics;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace OneInteg.Server.Services
 {
@@ -21,8 +22,9 @@ namespace OneInteg.Server.Services
             this.planRepository = planRepository;
         }
 
-        public async Task<string> GetCheckoutUrl(Customer customer, string planReference)
+        public async Task<string> GetCheckoutUrl(Customer customer, string planReference, string promotionCode = "")
         {
+            string checkoutUrl = "";
             try
             {
                 if (!IsValidCustomer(customer.Email))
@@ -44,12 +46,25 @@ namespace OneInteg.Server.Services
                 var plan = (await planRepository.Find(doc => doc.PlanReference == planReference &&
                                                              doc.TenantId == customer.TenantId)).FirstOrDefault();
 
-                if (plan == null || (plan.Data is null))
+                if (!(plan is null || plan.Data is null))
                 {
-                    return string.Empty;
+                    if (!string.IsNullOrEmpty(promotionCode))
+                    {
+                        var promotion = plan.Promotions.FirstOrDefault(p => p.Code == promotionCode);
+
+                        // HACK: temporary workaround — expiration validation still pending
+                        if (promotion is not null)
+                        {
+                            dynamic promotionData = GetDataObject(promotion.Data);
+                            checkoutUrl = Convert.ToString(promotionData.init_point);
+                        }
+                    } 
+                    else
+                    {
+                        dynamic data = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(plan.Data);
+                        checkoutUrl = Convert.ToString(data.init_point);
+                    }
                 }
-                dynamic data = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(plan.Data);
-                var checkoutUrl = Convert.ToString(data.init_point);
 
                 return checkoutUrl;
             }
@@ -69,6 +84,13 @@ namespace OneInteg.Server.Services
             {
                 return false; // Format is invalid
             }
+        }
+
+        private dynamic GetDataObject(string data)
+        {
+            dynamic dataObject = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(data);
+
+            return dataObject;
         }
     }
 }

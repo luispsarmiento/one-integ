@@ -77,6 +77,7 @@ static async Task<IResult> CheckoutUrl(
     [FromRoute(Name = "t_id")] Guid tenantId,
     [FromQuery(Name = "customer")] string? customer,
     [FromQuery(Name = "plan_id")] string? planId,
+    [FromQuery(Name = "promotion_code")] string? promotionCode,
     //SERVICES
     [FromServices] ITenantRepository tenantRepository,
     [FromServices] ISubscriptionService subscriptionService)
@@ -93,7 +94,7 @@ static async Task<IResult> CheckoutUrl(
     {
         TenantId = tenant.TenantId,
         Email = Encoding.UTF8.GetString(Convert.FromBase64String(customer))
-    }, planId);
+    }, planId, promotionCode);
 
     if (string.IsNullOrEmpty(subscriptionLink))
     {
