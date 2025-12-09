@@ -29,6 +29,8 @@ namespace OneInteg.Server.IoCConfig
             services.AddScoped<IPlanRepository, PlanRepository>();
 
             services.AddScoped<ISubscriptionService, SubscriptionService>();
+            services.AddScoped<ITenantService, TenantService>();
+            services.AddScoped<ICustomerService, CustomerService>();
         }
 
         public static void AddPaymentProviders(this IServiceCollection services) 
