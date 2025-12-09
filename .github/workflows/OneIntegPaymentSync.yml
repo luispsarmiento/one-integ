@@ -6,8 +6,10 @@ on:
     branches:
       - main
     paths:
-      - OneInteg.Function
-
+      - 'OneInteg.Function/**'
+      
+  workflow_dispatch:
+  
 permissions:
   id-token: write
   contents: read
