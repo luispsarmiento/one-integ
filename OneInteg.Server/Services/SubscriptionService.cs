@@ -92,5 +92,19 @@ namespace OneInteg.Server.Services
 
             return dataObject;
         }
+
+        public async Task<List<Subscription>> GetSubscriptionsSyncPending(DateTime date)
+        {
+            try
+            {
+                var queryResult = await repository.Find(doc => doc.NextPaymentDate <= date);
+
+                return queryResult.ToList();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }
