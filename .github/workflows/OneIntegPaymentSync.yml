@@ -43,6 +43,7 @@ jobs:
   
       - name: Install dependencies
         run: npm install
+        working-directory: OneInteg.Client
 
       - name: Build
         run: dotnet build "${{ env.WORKING_DIRECTORY }}" -c ${{ env.CONFIGURATION }} --no-restore
