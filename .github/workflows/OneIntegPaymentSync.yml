@@ -5,6 +5,8 @@ on:
   push:
     branches:
       - feature/daily-payment-sync
+    paths:
+      - OneInteg.Function
 
 permissions:
   id-token: write
@@ -31,6 +33,14 @@ jobs:
 
       - name: Restore
         run: dotnet restore "${{ env.WORKING_DIRECTORY }}"
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+  
+      - name: Install dependencies
+        run: npm install
 
       - name: Build
         run: dotnet build "${{ env.WORKING_DIRECTORY }}" -c ${{ env.CONFIGURATION }} --no-restore
