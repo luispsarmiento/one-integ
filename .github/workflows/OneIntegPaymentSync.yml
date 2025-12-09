@@ -4,7 +4,7 @@ name: Build and deploy .NET 8 Functions - OneIntegPaymentSync
 on:
   push:
     branches:
-      - feature/daily-payment-sync
+      - main
     paths:
       - OneInteg.Function
 
