@@ -6,7 +6,8 @@ namespace OneInteg.Server.Services
 {
     public class TenantService : BaseService<Tenant>, ITenantService
     {
-        public TenantService(IBaseRepository<Tenant> repository) : base(repository)
+        protected readonly ITenantRepository repository;
+        public TenantService(ITenantRepository repository) : base(repository)
         {
         }
     }

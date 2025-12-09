@@ -1,12 +1,14 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.5.2.0
+# Visual Studio Version 18
+VisualStudioVersion = 18.0.11222.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneInteg.Server", "OneInteg.Server\OneInteg.Server.csproj", "{7EF2A80E-C7FA-C165-36E7-A70E6960529D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneInteg.Shared", "OneInteg.Shared\OneInteg.Shared.csproj", "{9BCC2483-4675-C7BB-3A68-E67AE129F35F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneInteg.Client", "OneInteg.Client\OneInteg.Client.csproj", "{B3EF9FD6-23BE-5CA8-F3F2-BEF077EC93A0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneInteg.Function", "OneInteg.Function\OneInteg.Function.csproj", "{DCE64E79-0831-485E-8C89-07BE0B82F5F4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,6 +28,10 @@ Global
 		{B3EF9FD6-23BE-5CA8-F3F2-BEF077EC93A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3EF9FD6-23BE-5CA8-F3F2-BEF077EC93A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3EF9FD6-23BE-5CA8-F3F2-BEF077EC93A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCE64E79-0831-485E-8C89-07BE0B82F5F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCE64E79-0831-485E-8C89-07BE0B82F5F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCE64E79-0831-485E-8C89-07BE0B82F5F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCE64E79-0831-485E-8C89-07BE0B82F5F4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
