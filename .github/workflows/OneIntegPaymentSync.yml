@@ -32,6 +32,8 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '${{ env.DOTNET_VERSION }}'
+          runtime: 'dotnet'
+          channel: '8.0'
 
       - name: Restore
         run: dotnet restore "${{ env.WORKING_DIRECTORY }}"
