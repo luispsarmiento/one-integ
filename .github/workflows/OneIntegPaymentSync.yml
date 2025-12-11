@@ -18,7 +18,7 @@ env:
   AZURE_FUNCTIONAPP_NAME: OneIntegPaymentSync
   WORKING_DIRECTORY: OneInteg.Function
   CONFIGURATION: Release
-  DOTNET_VERSION: 8.0.x
+  DOTNET_VERSION: 8.x
   PUBLISH_DIR: out/publish
   PACKAGE_ZIP: out/functions.zip
 
@@ -31,7 +31,7 @@ jobs:
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: ${{ env.DOTNET_VERSION }}
+          dotnet-version: '${{ env.DOTNET_VERSION }}'
 
       - name: Restore
         run: dotnet restore "${{ env.WORKING_DIRECTORY }}"
