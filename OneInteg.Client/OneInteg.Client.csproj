@@ -24,10 +24,6 @@
     <ProjectReference Include="..\OneInteg.Shared\OneInteg.Shared.csproj" />
   </ItemGroup>
 
-	<PropertyGroup>
-	  <EnableDefaultContentItems>false</EnableDefaultContentItems>
-	</PropertyGroup>
-
 	<Target Name="Tailwind" BeforeTargets="Compile">
 		<Exec Command="npx tailwindcss -i ./wwwroot/css/app.css -o ./wwwroot/css/style.css" />
 	</Target>
@@ -40,4 +36,5 @@
 		<Exec Command="npx tailwindcss -i ./wwwroot/css/app.css -o ./wwwroot/css/style.css --minify" />
 	</Target>
 </Project>
+
 
