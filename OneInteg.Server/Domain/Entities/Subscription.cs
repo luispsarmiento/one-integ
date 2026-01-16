@@ -13,4 +13,6 @@ public class Subscription
     public DateTime NextPaymentDate { get; set; }
     public DateTime UpdateAt { get; set; }
     public DateTime CreateAt { get; set; }
+    public SubscriptionStatusEnum? Status { get; set; }
+    public DateTime? CancelledAt { get; set; }
 }

@@ -1,5 +1,6 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using OneInteg.Server.Domain.Entities;
 using OneInteg.Shared;
 
 namespace OneInteg.Server.DataAccess
@@ -20,5 +21,8 @@ namespace OneInteg.Server.DataAccess
         public DateTime NextPaymentDate { get; set; }
         public DateTime UpdateAt { get; set; }
         public DateTime CreateAt { get; set; }
+        [BsonRepresentation(BsonType.String)]
+        public SubscriptionStatusEnum? Status { get; set; }
+        public DateTime? CancelledAt { get; set; }
     }
 }
