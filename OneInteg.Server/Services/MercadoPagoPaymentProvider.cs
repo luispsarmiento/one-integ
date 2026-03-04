@@ -119,6 +119,23 @@ namespace OneInteg.Server.Services
 
             return preapproval;
         }
+
+        public async Task<bool> CancelSubscription(string preapprovalId)// FIXME: this method should be improved to handle the cancellation of the subscription in the payment provider and also update the subscription status in the database
+        {
+            using var httpClient = new HttpClient();
+            httpClient.BaseAddress = new Uri(this.BaseUri);
+            httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {this.AccessToken}");
+
+            var requestBody = new { status = "cancelled" };
+            var jsonContent = new StringContent(
+                JsonConvert.SerializeObject(requestBody),
+                Encoding.UTF8,
+                "application/json");
+
+            using HttpResponseMessage response = await httpClient.PutAsync($"preapproval/{preapprovalId}", jsonContent);
+
+            return response.IsSuccessStatusCode;
+        }
     }
 
     class PreapprovalResponse

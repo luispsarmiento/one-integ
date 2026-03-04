@@ -6,4 +6,5 @@ public interface IPaymentProvider
 {
     public Task<Subscription?> HandleBackUrlSubscription(Guid tenantId, string preapprovalId, string customerEmail);
     public Task<Subscription?> HandleSubscriptionPayment(Subscription preapproval);
+    public Task<bool> CancelSubscription(string preapprovalId);
 }
