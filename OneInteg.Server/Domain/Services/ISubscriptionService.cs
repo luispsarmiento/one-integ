@@ -8,5 +8,6 @@ namespace OneInteg.Server.Domain.Services
     {
         Task<string> GetCheckoutUrl(Customer customer, string planReference, string promotionCode = "");
         Task<List<Subscription>> GetSubscriptionsSyncPending(DateTime date);
+        Task<Subscription?> CancelSubscription(Guid tenantId, string reference);
     }
 }
