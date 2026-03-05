@@ -55,3 +55,4 @@ nunit-*.xml
 /.vs
 /OneInteg.Client/wwwroot/node_modules
 /OneInteg.Client/node_modules
+**/Properties/launchSettings.json
