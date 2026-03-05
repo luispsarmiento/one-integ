@@ -56,3 +56,5 @@ nunit-*.xml
 /OneInteg.Client/wwwroot/node_modules
 /OneInteg.Client/node_modules
 **/Properties/launchSettings.json
+/OneInteg.Server/run-prod.ps1
+/OneInteg.Server/run-dev.ps1

@@ -1,0 +1,6 @@
+﻿$env:ASPNETCORE_ENVIRONMENT="Development"
+$env:MONGO_DB_URI=""
+$env:MONGO_DB_NAME=""
+$env:MERCADO_PAGO_URI=""
+$env:MERCADO_PAGO_ACCESS_TOKEN=""
+dotnet run --urls="https://localhost:7219;http://localhost:5192"
