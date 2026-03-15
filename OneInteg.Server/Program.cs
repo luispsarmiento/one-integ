@@ -7,6 +7,7 @@ using OneInteg.Server.Domain.Services;
 using OneInteg.Server.IoCConfig;
 using OneInteg.Server.Services;
 using System.Net.Mail;
+using System.Reflection;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -33,7 +34,11 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
+builder.Services.AddEndpoints(Assembly.GetExecutingAssembly());
+
 var app = builder.Build();
+
+app.MapEndpoints();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
