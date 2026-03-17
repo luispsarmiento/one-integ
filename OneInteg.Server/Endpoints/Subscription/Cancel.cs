@@ -20,7 +20,9 @@ namespace OneInteg.Server.Endpoints.Subscription
                     return Results.NotFound(new { message = "Subscription not found or could not be cancelled" });
                 }
 
-                return Results.Ok(subscription);
+                var response = (CancelResponse)subscription;
+
+                return Results.Ok(response);
             });
         }
     }
