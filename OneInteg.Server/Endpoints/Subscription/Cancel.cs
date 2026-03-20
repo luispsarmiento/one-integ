@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.AspNetCore.Mvc;
+using OneInteg.Server.Domain.Services;
 
 namespace OneInteg.Server.Endpoints.Subscription
 {
@@ -7,11 +8,21 @@ namespace OneInteg.Server.Endpoints.Subscription
     {
         public void MapEndpoint(IEndpointRouteBuilder app)
         {
-            app.MapPost("/{t_id}/subscription/{reference}/cancel", 
+            app.MapPost("/{t_id}/subscription/{reference}/cancel",
                 async ([FromRoute(Name = "t_id")] Guid tenantId,
-                       [FromRoute(Name = "reference")] string reference) =>
+                       [FromRoute(Name = "reference")] string reference,
+                       [FromServices] ISubscriptionService subscriptionService) =>
             {
-                return Results.Ok("Mock: Subscription cancelled");
+                var subscription = await subscriptionService.CancelSubscription(tenantId, reference);
+
+                if (subscription == null)
+                {
+                    return Results.NotFound(new { message = "Subscription not found or could not be cancelled" });
+                }
+
+                var response = (CancelResponse)subscription;
+
+                return Results.Ok(response);
             });
         }
     }

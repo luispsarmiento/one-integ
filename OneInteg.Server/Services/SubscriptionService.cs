@@ -1,4 +1,4 @@
-﻿using MongoDB.Bson;
+using MongoDB.Bson;
 using MongoDB.Bson.IO;
 using OneInteg.Server.DataAccess;
 using OneInteg.Server.Domain.Repositories;
@@ -15,11 +15,13 @@ namespace OneInteg.Server.Services
 
         protected readonly ICustomerRepository customerRepository;
         protected readonly IPlanRepository planRepository;
-        public SubscriptionService(ISubscriptionRepository repository, ICustomerRepository customerRepository, IPlanRepository planRepository) : base(repository)
+        protected readonly IServiceProvider serviceProvider;
+        public SubscriptionService(ISubscriptionRepository repository, ICustomerRepository customerRepository, IPlanRepository planRepository, IServiceProvider serviceProvider) : base(repository)
         {
             this.repository = repository;
             this.customerRepository = customerRepository;
             this.planRepository = planRepository;
+            this.serviceProvider = serviceProvider;
         }
 
         public async Task<string> GetCheckoutUrl(Customer customer, string planReference, string promotionCode = "")
@@ -100,6 +102,45 @@ namespace OneInteg.Server.Services
                 var queryResult = await repository.Find(doc => doc.NextPaymentDate <= date);
 
                 return queryResult.ToList();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<Subscription?> CancelSubscription(Guid tenantId, string reference)
+        {
+            try
+            {
+                var subscriptions = await repository.Find(doc => doc.Reference == reference && doc.TenantId == tenantId);
+                var subscription = subscriptions.FirstOrDefault();
+
+                if (subscription == null)
+                {
+                    return null;
+                }
+
+                if (subscription.Status == Domain.Entities.SubscriptionStatusEnum.Cancelled)
+                {
+                    return subscription;
+                }
+                // FIXME: this is coupling the service with the payment provider, we should find a way to decouple it
+                var paymentProvider = serviceProvider.GetRequiredKeyedService<IPaymentProvider>(PaymentProviderType.MercadoPago);
+                var cancelledInPaymentProvider = await paymentProvider.CancelSubscription(reference);
+
+                if (!cancelledInPaymentProvider)
+                {
+                    return null;
+                }
+
+                subscription.Status = Domain.Entities.SubscriptionStatusEnum.Cancelled;
+                subscription.CancelledAt = DateTime.UtcNow;
+                subscription.UpdateAt = DateTime.UtcNow;
+
+                await repository.Update(subscription);
+
+                return subscription;
             }
             catch (Exception)
             {
